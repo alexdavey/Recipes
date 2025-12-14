@@ -1,15 +1,5 @@
 {{ define "head" }}
   <script>
-    let yelpLocation = {{ .Site.Params.yelpLocation | default "Bloomfield, NJ" | jsonify | safeJS }};
-
-    let helpUrls = {{ .Site.Params.helpUrls | default (slice) | jsonify | safeJS }};
-    helpUrls = helpUrls.map(function(item) {
-      if (typeof item.url === "string" && item.url.includes("<loc>")) {
-        return { label: item.label, url: item.url.replace("<loc>", encodeURIComponent(yelpLocation)) };
-      }
-      return item;
-    });
-
     let lookForHeroImage = {{ .Site.Params.lookForHeroImage | default true }};
     let autoUrlSections = {{ .Site.Params.autoUrlSections | default (slice "basedon") | jsonify | safeJS }};
     let shortenURLs = {{ .Site.Params.shortenURLs | default false }};
@@ -41,7 +31,6 @@
     <section id="steps"></section>
     <hr />
     <section id="notes"></section>
-    <section id="help"></section>
     <section id="basedon"></section>
   </div>
 {{ end }}

@@ -84,10 +84,10 @@ ol li {
   margin-left: 1.05em;
 }
 
-#notes ul, #help ul, #basedon ul, #toc ul {
+#notes ul, #basedon ul, #toc ul {
   list-style: square outside;
 }
-#notes ul li, #help ul li, #basedon ul li, #toc ul li {
+#notes ul li, #basedon ul li, #toc ul li {
   margin-left: 1em;
 }
 #notes ul li {
@@ -233,7 +233,7 @@ hr {
     font-size: 1.15em;
   }
 
-  #toc ul, #help ul {
+  #toc ul {
     column-count:       2;
     -webkit-column-gap: 4em;
     -moz-column-gap:    4em;
@@ -271,7 +271,7 @@ hr {
   #title {
     text-align: left !important;
   }
-  #back, #help {
+  #back {
     display: none;
   }
 }

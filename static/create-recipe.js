@@ -107,15 +107,6 @@ $(document).ready(function() {
       // add some helper links
       let recipeName = $('h1').text().toLowerCase();
       recipeName = recipeName.trim().replace(/\s+/g, '+');
-      let help = '<h2>help!</h2>';
-      help += '<ul>';
-      for (let j in helpUrls) {
-        let label = helpUrls[j].label;
-        let url = helpUrls[j].url.replace('<name>', recipeName);
-        help += '<li><a href="' + url + '" target="blank">' + label + '</a></li>';
-      }
-      help += '</ul>';
-      $('#help').html(help);
 
       // click a step to highlight it
       $('#steps li').click( function() {

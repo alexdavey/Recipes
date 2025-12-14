@@ -1,38 +1,7 @@
-# RECIPE BOOK
+# Recipes
 
-A super minimal recipe website – great for keeping track of family recipes, mods to ones you find online, or have created yourself!
+Go to ![https://alexdavey.github.io/Recipes](https://alexdavey.github.io/Recipes).
 
-**See it in action here: [jeffreythompson.org/recipes](http://jeffreythompson.org/recipes)**
-
-Features:
-* Recipes in a simple [Markdown format](https://daringfireball.net/projects/markdown), just dump them in a folder and upload  
-* List of recipes will auto-populate with quick alpha links at the top  
-* Each recipe is displayed in a nice, clean format designed for use while cooking or at the grocery store – no extra 💩 or ads  
-* Auto-generated links to a Google image search for that dish, recipes on Serious Eats and Google, and for restaurants on Yelp (in case you burn something and need takeout fast)  
-* To save your place while scrolling up around on the page, click the step you're on to highlight it; click it again to remove the highlight, or use the left/right arrow keys to advance  
-* Easily customized and code is (mostly) really well annotated 🙃  
-
-## HUGO VERSION (GITHUB PAGES)
-This repo is now Hugo-based (static) so it works on GitHub Pages without PHP.
-
-Local dev:
-* Install Hugo
-* Run `hugo server`
-
-Build:
-* Run `hugo` (outputs to `public/`)
-
-Where things live now:
-* Recipes: `static/recipes/*.md`
-* Images: `static/images/*.jpg`
-* CSS/JS: `static/`
-* Hugo config + options: `hugo.toml`
-
-Deployment:
-* GitHub Pages is set up via `.github/workflows/hugo.yml` (Pages → Build and deployment → GitHub Actions)
-
-
-## MORE INFO  
 * [Recipe format](#recipe-format)
 * [Adding images](#adding-images)
 * [Other options](#other-options)
@@ -122,14 +91,6 @@ You can also include other images in the recipe using Markdown's image syntax: `
 
 
 ## OTHER OPTIONS  
-The `recipe.php` file also includes some more options you can customize:
-
-* `yelpLocation`: the city/state where you're located to make Yelp searches easier! No need for fancy formatting, this will work fine: `Minneapolis MN`  
-* `helpUrls`: dictionary with the `label` (text displayed) and `url` in template form. The string `<name>` will be replaced with your recipe's name  
 * `lookForHeroImage`: on by default, but you can turn it off if you never intend to include hero images  
 * `autoUrlSections`: list of sections in the recepe template where you want raw URLs (ex: www.instagram.com) to be turned into real links. Great for the `Based On` section but not so good if you want to include Markdown-formatted links in other sections  
 * `shortenUrls`: turns a super-long url into just the main domain name (link will still work as normal, just less cluttered). Off by default but exists if you want it
-
-
-## SUGGESTIONS WELCOME  
-If you have suggestions for improving this project, please let me know! Either [open an issue](https://github.com/jeffThompson/Recipes/issues/new) or send me an email.
