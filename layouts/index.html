@@ -1,17 +1,43 @@
-{{ define "head" }}
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous">
-  </script>
-{{ end }}
-
 {{ define "main" }}
+  {{- $recipes := slice -}}
+  {{- $letters := slice -}}
+  {{- $prevLetter := "" -}}
+
+  {{- range sort (readDir "static/recipes") "Name" -}}
+    {{- if and (not .IsDir) (strings.HasSuffix .Name ".md") (not (strings.HasPrefix .Name "_")) -}}
+      {{- $anchor := strings.TrimSuffix ".md" .Name -}}
+      {{- $name := replace $anchor "-" " " -}}
+      {{- $letter := upper (substr $name 0 1) -}}
+      {{- $isNewLetter := ne $letter $prevLetter -}}
+
+      {{- $recipes = $recipes | append (dict "anchor" $anchor "name" $name "letter" $letter "newLetter" $isNewLetter) -}}
+      {{- if $isNewLetter -}}
+        {{- $letters = $letters | append $letter -}}
+      {{- end -}}
+      {{- $prevLetter = $letter -}}
+    {{- end -}}
+  {{- end -}}
+
   <div id="wrapper" class="index">
     <section id="toc">
       <h1 id="mainTitle">{{ .Site.Title }}</h1>
-      <p id="navigation"></p>
-      <ul></ul>
+      <p id="navigation">
+        {{- range $letters -}}
+          <a href="#{{ . }}">{{ . }} </a>
+        {{- end -}}
+      </p>
+
+      <ul>
+        {{- range $recipes -}}
+          {{- if .newLetter -}}
+            <li id="{{ .letter }}">
+          {{- else -}}
+            <li>
+          {{- end -}}
+            <a href="{{ "recipe/" | relURL }}#{{ .anchor }}">{{ .name }}</a>
+          </li>
+        {{- end -}}
+      </ul>
     </section>
 
     <!-- <section id="footer">
@@ -19,20 +45,4 @@
          </ul>
          </section> -->
   </div>
-{{ end }}
-
-{{ define "scripts" }}
-  {{- $files := slice -}}
-  {{- range sort (readDir "static/recipes") "Name" -}}
-    {{- if and (not .IsDir) (strings.HasSuffix .Name ".md") -}}
-      {{- $files = $files | append .Name -}}
-    {{- end -}}
-  {{- end -}}
-
-  <script>
-    let files = {{ $files | jsonify | safeJS }};
-  </script>
-
-  <script src="{{ "utils.js" | relURL }}"></script>
-  <script src="{{ "list-recipes.js" | relURL }}"></script>
 {{ end }}
