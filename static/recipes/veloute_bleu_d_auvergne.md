@@ -1,7 +1,8 @@
 # Velouté with bleu d'Auvergne
 
 ## info  
-- 2-3 portions
+- 2-3 servings
+
 ## ingredients
 - 1,2 kg butternut squash
 - 1 half onion  
