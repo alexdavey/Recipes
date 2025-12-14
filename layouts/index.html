@@ -1,19 +1,30 @@
 {{ define "main" }}
   {{- $recipes := slice -}}
-  {{- $letters := slice -}}
-  {{- $prevLetter := "" -}}
 
   {{- range sort (readDir "static/recipes") "Name" -}}
     {{- if and (not .IsDir) (strings.HasSuffix .Name ".md") (not (strings.HasPrefix .Name "_")) -}}
       {{- $anchor := strings.TrimSuffix ".md" .Name -}}
-      {{- $name := replace $anchor "-" " " -}}
-      {{- $letter := upper (substr $name 0 1) -}}
-      {{- $isNewLetter := ne $letter $prevLetter -}}
+      {{- $fallbackTitle := replace $anchor "-" " " -}}
 
-      {{- $recipes = $recipes | append (dict "anchor" $anchor "name" $name "letter" $letter "newLetter" $isNewLetter) -}}
-      {{- if $isNewLetter -}}
-        {{- $letters = $letters | append $letter -}}
+      {{- $path := printf "static/recipes/%s" .Name -}}
+      {{- $raw := readFile $path -}}
+      {{- $title := $fallbackTitle -}}
+      {{- $m := findRESubmatch `(?m)^#\s+(.+?)\s*$` $raw 1 -}}
+      {{- if gt (len $m) 0 -}}
+        {{- $title = strings.TrimSpace (index (index $m 0) 1) -}}
       {{- end -}}
+
+      {{- $recipes = $recipes | append (dict "anchor" $anchor "title" $title) -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $sorted := sort $recipes "title" -}}
+  {{- $letters := slice -}}
+  {{- $prevLetter := "" -}}
+  {{- range $sorted -}}
+    {{- $letter := upper (substr .title 0 1) -}}
+    {{- if ne $letter $prevLetter -}}
+      {{- $letters = $letters | append $letter -}}
       {{- $prevLetter = $letter -}}
     {{- end -}}
   {{- end -}}
@@ -28,14 +39,17 @@
       </p>
 
       <ul>
-        {{- range $recipes -}}
-          {{- if .newLetter -}}
-            <li id="{{ .letter }}">
+        {{- $prevLetter = "" -}}
+        {{- range $sorted -}}
+          {{- $letter := upper (substr .title 0 1) -}}
+          {{- if ne $letter $prevLetter -}}
+            <li id="{{ $letter }}">
           {{- else -}}
             <li>
           {{- end -}}
-            <a href="{{ "recipe/" | relURL }}#{{ .anchor }}">{{ .name }}</a>
+            <a href="{{ "recipe/" | relURL }}#{{ .anchor }}">{{ .title }}</a>
           </li>
+          {{- $prevLetter = $letter -}}
         {{- end -}}
       </ul>
     </section>
