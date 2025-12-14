@@ -13,7 +13,7 @@ const CORE_ASSETS = [
   urlFromScope("stylesheet.css"),
   urlFromScope("recipe-steps.js"),
   urlFromScope("manifest.webmanifest"),
-  urlFromScope("icons/icon.svg")
+  urlFromScope("apple-touch-icon.png")
 ];
 
 self.addEventListener("install", (event) => {
@@ -48,4 +48,3 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
-
