@@ -1,6 +1,6 @@
 ---
 title: "Velouté with bleu d'Auvergne"
-time: "2-3 servings"
+makes: "2-3 servings"
 ---
 
 ## ingredients
